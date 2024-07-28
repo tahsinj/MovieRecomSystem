@@ -63,15 +63,15 @@ def train(Ynorm, R, num_users, num_movies, num_features, lambda_ = 1, iterations
 
         optimizer.apply_gradients(zip(grads, [X,W,b]) )
 
-        if iter % 20 == 0:
-            print(f"Training loss at iteration {iter}: {cost_value:0.1f}")
+        # if iter % 20 == 0:
+        #     print(f"Training loss at iteration {iter}: {cost_value:0.1f}")
     
     return X, W, b
 
 def add_ratings(num_movies, idxToRate, ratingGiven):
     my_ratings = np.zeros(num_movies)
     for i in range(len(idxToRate)):
-        my_ratings[idxToRate[i]] = ratingGiven[i]
+        my_ratings[int(idxToRate[i])] = ratingGiven[i]
     my_rated = [i for i in range(len(my_ratings)) if my_ratings[i] > 0]
     return my_ratings, my_rated
     
@@ -88,12 +88,13 @@ def predict(X, W, b, Ymean):
 
     return my_predictions, ix
 
-def filtered_output(my_ratings, my_rated, my_predictions, ix):
+def filtered_output(my_ratings, my_rated, my_predictions, ix, movieList_df):
     filter=(movieList_df["Rating Count"] > 20)
     movieList_df["pred"] = my_predictions
     movieList_df = movieList_df.reindex(columns=["pred", "Mean Rating", "Rating Count", "title"])
     movieList_df.loc[ix[:300]].loc[filter].sort_values("Mean Rating", ascending=False)
 
+    print("Selected movies for you: ")
     for i in range(17):
         j = int(ix[i])
         if j not in my_rated:

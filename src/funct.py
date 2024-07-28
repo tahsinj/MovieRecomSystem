@@ -1,9 +1,12 @@
+import os
 import numpy as np
 import pandas as pd
 from scipy.sparse import csr_matrix
 from sklearn.neighbors import NearestNeighbors
 from sklearn.metrics.pairwise import cosine_similarity
 from fuzzywuzzy import process
+
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 
 # Loading Data
 ratings = pd.read_csv("data/ratings.csv")
@@ -84,9 +87,11 @@ def get_content_based_recommendations(title_string, n_recommendations=10):
     sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     sim_scores_df = pd.DataFrame(sim_scores, columns = ['movieId', 'sim_score'])
-    sim_scores_df = sim_scores_df.merge(bayesian_avg_ratings, on ='movieId')
-    sim_scores_df = sim_scores_df.sort_values(by=["sim_score","bayesian_avg"], ascending=False)
+    sim_scores_df = sim_scores_df.sort_values(by=["sim_score"], ascending=False)
     sim_scores_mId = sim_scores_df["movieId"].tolist()
-    similar_movies = [i for i in sim_scores_mId[1:11]]
-    print(movies['title'].iloc[similar_movies])
-    return similar_movies
+    similar_movies = []
+    for i in sim_scores_mId[0:n_recommendations+1]:
+        print(movies['title'].iloc[i])
+        if (movies['title'].iloc[i] != title):
+            similar_movies.append(i)
+    return movies['title'].iloc[similar_movies], title
