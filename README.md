@@ -1,8 +1,6 @@
 # Movie Recommendation System
-
+## Overview
 This project is a movie recommendation system developed using TensorFlow, leveraging collaborative filtering and content-based filtering techniques. It processes the MovieLens dataset to create user-movie interaction matrices and utilizes advanced machine learning algorithms to predict and recommend movies based on user preferences.
-
-## Introduction
 The Movie Recommendation System is designed to provide personalized movie suggestions to users. By analyzing the MovieLens dataset, the system can predict user preferences and recommend movies that users are likely to enjoy. This project showcases the integration of collaborative filtering and content-based filtering techniques to deliver accurate and relevant recommendations.
 
 ## Features
