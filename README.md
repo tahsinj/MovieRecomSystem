@@ -21,3 +21,22 @@ The project uses the [MovieLens dataset](https://grouplens.org/datasets/movielen
 - Machine Learning
 - Pandas
 - NumPy
+
+## Getting Started
+1. Clone the Repository:
+```bash
+git clone https://github.com/tahsinj/MovieRecomSystem.git
+```
+2. Create a Virtual Environment:
+```bash
+python -m venv .venv
+.venv/Scripts/activate  # On MacOS/Linux use `source venv/bin/activate`
+```
+3. Install Dependencies:
+```bash
+pip install requirements.txt
+```
+4. Run the CLI Program:
+```bash
+python src/main.py
+```
